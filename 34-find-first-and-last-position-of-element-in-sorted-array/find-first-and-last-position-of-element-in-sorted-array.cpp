@@ -1,63 +1,50 @@
 class Solution {
 public:
+    int last_position(vector<int>&nums,int target,int n){
+        int lo = 0;
+        int hi = n-1;
+        int right_most = -1;
+        while(lo<=hi){
+            int mid = lo + (hi-lo)/2;
+            if(target == nums[mid]){
+                right_most = mid;
+                lo  = mid+1;
+            }
+            else if(target < nums[mid]){
+                hi = mid-1;
+            }
+            else{
+                lo = mid+1;
+            }
+        }
+        return right_most;
+    }
+    int first_position(vector<int>&nums,int target,int n){
+        int lo = 0;
+        int hi = n-1;
+        int left_most = -1;
+        while(lo<=hi){
+            int mid = lo + (hi-lo)/2;
+            if(target == nums[mid]){
+                left_most = mid;
+                hi  = mid-1;
+            }
+            else if(target < nums[mid]){
+                hi = mid-1;
+            }
+            else{
+                lo = mid+1;
+            }
+        }
+        return left_most;
+    }
+
     vector<int> searchRange(vector<int>& nums, int target) {
-    int low   = 0;
-    int high  = nums.size()-1;
-    bool first_flag = false;
+        int n  = nums.size();
 
-    vector<int>v;
+        int first =  first_position(nums,target,n);
+        int last  =   last_position(nums,target,n);
 
-    while(low <= high){
-        int mid = (low+high) / 2;
-        if(nums[mid] == target){
-            if(mid == 0 || nums[mid-1] != target){
-                v.push_back(mid);
-                first_flag = true;
-                break;
-            }
-            else if(nums[mid-1] == target){
-                high = mid-1;
-            }
-
-        }
-        else if(nums[mid] < target){
-            low = mid+1;
-        }
-        else{
-            high = mid-1;
-        }
-    }
-
-    low   = 0;
-    high  = nums.size()-1;
-    bool second_flag=false;
-
-    while(low <= high){
-        int mid = (low+high) / 2;
-        if(nums[mid] == target){
-            if(mid == nums.size()-1 || nums[mid+1] != target){
-                v.push_back(mid);
-                second_flag = true;
-                break;
-            }
-            else if(nums[mid+1] == target){
-                low = mid+1;
-            }
-
-        }
-        else if(nums[mid] < target){
-            low = mid+1;
-        }
-        else{
-            high = mid-1;
-        }
-    }
-
-    if(second_flag  && first_flag ) {
-        return v;
-    }
-    else{
-        return {-1,-1};
-    } 
+        return {first,last};
     }
 };
