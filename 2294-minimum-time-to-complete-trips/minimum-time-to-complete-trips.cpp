@@ -16,7 +16,7 @@ public:
         int n = time.size();
 
         long long lo = 1;
-        //calcu;ation for long long values and for finding minimum element in vector
+        //calculation for long long values and for finding minimum element in vector
         long long hi = 1ll * (*min_element(time.begin(),time.end())) * totalTrips;
 
         while(lo < hi){
